@@ -1,7 +1,7 @@
 from django.conf.urls import url
-from .views import Index, Create
+from .views import Users, Filter
 
 urlpatterns = [
-    url(r'^$', Index.as_view(), name='index'),
-    url(r'^create$', Create.as_view(), name='create')
+    url(r'^$', Users.as_view(), name='index'),
+    url(r'^filter$', Filter.as_view(), name='filter')
 ]
