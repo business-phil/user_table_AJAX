@@ -10,17 +10,18 @@
 <body>
     <h1>View Users</h1>
     <h3>Filter Users</h3>
-    <form id="filter_form" action="{% url 'index' %}" method="post">
+    <form id="filter_form" action="{% url 'filter' %}" method="post">
+        {% csrf_token %}
         <p><label for="name">Name: </label>
-            {% csrf_token %}
         <input id="name" type="text" name="name" /></p>
         <p><label for="date_from">From: </label>
         <input id="date_from" type="date" name="date_from" />
         <label for="date_to">To: </label>
         <input id="date_to" type="date" name="date_to" /></p>
+        <input type="submit" value="Filter">
     </form> <!-- end filter form -->
-    <p id="prev_page"><a href="#"><< Previous</a></p>
-    <p id="next_page"><a href="#">Next >></a></p>
+    <!-- <p id="prev_page"><a href="#"><< Previous</a></p> -->
+    <!-- <p id="next_page"><a href="#">Next >></a></p> -->
     <table id="user_table">
         <thead>
             <th>User ID</th>
@@ -35,14 +36,14 @@
                 <td>{{ user.id }}</td>
                 <td>{{ user.first_name }}</td>
                 <td>{{ user.last_name }}</td>
-                <td>{{ user.created_at }}</td>
+                <td>{{ user.created_at|date:"N d, Y" }}</td>
                 <td>{{ user.email }}</td>
             </tr>
             {% endfor %}
         </tbody>
     </table> <!-- end user table -->
     <h3>Add New User</h3>
-    <form id="create_form" action="{% url 'create' %}" method="post">
+    <form id="create_form" action="{% url 'index' %}" method="post">
         {% csrf_token %}
         {{ add_user.as_p }}
         <input type="submit" value="Add User">
