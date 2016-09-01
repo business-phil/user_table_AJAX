@@ -10,11 +10,11 @@ class Users(View):
         pagecount = int(float(len(userquery)-1)/5)
         print "Query Length:", len(userquery)
         print "Pagecount:", pagecount
-        print "Page Range:", range(pagecount)
+        print "Page Range:", range(pagecount+1)
         context = {
             'users': userquery[0:5],
             'rowcount': range(len(userquery), 5),
-            'pagerange': range(pagecount),
+            'pagerange': range(pagecount+1),
             'add_user': UserForm(),
         }
         return render(request, 'users/index.html', context)
@@ -32,11 +32,11 @@ class Users(View):
         pagecount = int(float(len(userquery)-1)/5)
         print "Query Length:", len(userquery)
         print "Pagecount:", pagecount
-        print "Page Range:", range(pagecount)
+        print "Page Range:", range(pagecount+1)
         context = {
             'users': userquery[0:5],
             'rowcount': range(len(userquery), 5),
-            'pagerange': range(pagecount),
+            'pagerange': range(pagecount+1),
         }
         return render(request, 'users/index_table.html', context)
 
@@ -47,7 +47,7 @@ class Create(View):
         context = {
             'users': userquery[0:5],
             'rowcount': range(len(userquery), 5),
-            'pagerange': range(pagecount),
+            'pagerange': range(pagecount+1),
         }
         return render(request, 'users/index_table.html', context)
 

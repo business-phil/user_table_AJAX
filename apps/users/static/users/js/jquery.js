@@ -1,5 +1,5 @@
 // Refresh User Table based on filter conditions
-$('#filter_form').submit(function(event) {
+$('#form').submit(function(event) {
     event.preventDefault();
     $.ajax({
         url: "/",
