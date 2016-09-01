@@ -1,13 +1,26 @@
-$(document).ready(function() {
-    $('#create_form').submit(function(event) {
-        event.preventDefault();
-        $.ajax({
-            url: "{% url 'index' %}",
-            method: "post",
-            data: $(this).serialize(),
-            success: function(serverResponse) {
-                $('#user_table').html(serverResponse);
-            }
-        });
+// Refresh User Table based on filter conditions
+$('#filter_form').submit(function(event) {
+    event.preventDefault();
+    $.ajax({
+        url: "/",
+        method: "post",
+        data: $(this).serialize(),
+        success: function(response) {
+            $('#user_table').html(response);
+        }
     });
+});
+
+$('#create_form').submit(function(event) {
+    event.preventDefault();
+    $.ajax({
+        url: "/create",
+        method: "post",
+        data: $(this).serialize(),
+        success: function(response) {
+            $('#user_table').html(response);
+        }
+    });
+    // Clear New User form
+    $(this).trigger('reset');
 });

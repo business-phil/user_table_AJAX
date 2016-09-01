@@ -9,7 +9,7 @@
 <body>
     <h1>View Users</h1>
     <h3>Filter Users</h3>
-    <form id="filter_form" action="{% url 'filter' %}" method="post">
+    <form id="filter_form" action="{% url 'index' %}" method="post">
         {% csrf_token %}
         <p><label for="name">Name: </label>
         <input id="name" type="text" name="name" /></p>
@@ -17,10 +17,7 @@
         <input id="date_from" type="date" name="date_from" />
         <label for="date_to">To: </label>
         <input id="date_to" type="date" name="date_to" /></p>
-        <input type="submit" value="Filter">
     </form> <!-- end filter form -->
-    <!-- <p id="prev_page"><a href="#"><< Previous</a></p> -->
-    <!-- <p id="next_page"><a href="#">Next >></a></p> -->
     <table id="user_table">
         <thead>
             <th>User ID</th>
@@ -39,6 +36,15 @@
                 <td>{{ user.email }}</td>
             </tr>
             {% endfor %}
+            {% for i in rowcount %}
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            {% endfor %}
         </tbody>
     </table> <!-- end user table -->
     <h3>Add New User</h3>
@@ -48,19 +54,5 @@
         <input type="submit" value="Add User">
     </form> <!-- end create user form -->
 </body>
-<script type="text/javascript">
-$(document).ready(function() {
-    $('#create_form').submit(function(event) {
-        event.preventDefault();
-        $.ajax({
-            url: "{% url 'index' %}",
-            method: "post",
-            data: $(this).serialize(),
-            success: function(serverResponse) {
-                $('#user_table').html(serverResponse);
-            }
-        });
-    });
-});
-</script>
+<script type="text/javascript" src="{% static 'users/js/jquery.js' %}"></script>
 </html>

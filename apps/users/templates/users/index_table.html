@@ -12,8 +12,17 @@
             <td>{{ user.id }}</td>
             <td>{{ user.first_name }}</td>
             <td>{{ user.last_name }}</td>
-            <td>{{ user.created_at }}</td>
+            <td>{{ user.created_at|date:"N d, Y" }}</td>
             <td>{{ user.email }}</td>
+        </tr>
+        {% endfor %}
+        {% for i in rowcount %}
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
         </tr>
         {% endfor %}
     </tbody>
