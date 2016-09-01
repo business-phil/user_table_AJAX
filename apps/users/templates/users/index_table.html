@@ -1,47 +1,48 @@
-<div id="user_table">
-    <form id="filter_form" action="{% url 'index' %}" method="post">
-        {% csrf_token %}
-        <p><label for="name">Name: </label>
-        <input id="name" type="text" name="name" /></p>
-        <p><label for="date_from">From: </label>
-        <input id="date_from" type="date" name="date_from" />
-        <label for="date_to">To: </label>
-        <input id="date_to" type="date" name="date_to" /></p>
-        {% if pagerange|length > 1 %}
-        <ul>
-            {% for i in pagerange %}
-            <li><a href="#"></a>{{ i|add:'1' }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-    </form>  <!-- end filter form -->
-    <table>
-        <thead>
-            <th>User ID</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Date Registered</th>
-            <th>Email</th>
-        </thead>
-        <tbody>
-            {% for user in users %}
-            <tr>
-                <td>{{ user.id }}</td>
-                <td>{{ user.first_name }}</td>
-                <td>{{ user.last_name }}</td>
-                <td>{{ user.created_at|date:"N d, Y" }}</td>
-                <td>{{ user.email }}</td>
-            </tr>
-            {% endfor %}
-            {% for i in rowcount %}
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
+<form id="filter_form" action="{% url 'index' %}" method="post">
+    {% csrf_token %}
+    <p><label for="name">Name: </label>
+    <input id="name" type="text" name="name" /></p>
+    <p><label for="date_from">From: </label>
+    <input id="date_from" type="date" name="date_from" />
+    <label for="date_to">To: </label>
+    <input id="date_to" type="date" name="date_to" /></p>
+    <input id="page" type="hidden" name="page" value="1" />
+    <!-- <input type="submit" value="Filter" /> -->
+    {% if pagerange|length > 1 %}
+    <ul>
+        <li>Page: </li>
+        {% for i in pagerange %}
+        <li><a href="#">{{ i|add:'1' }}</a></li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</form>  <!-- end filter form -->
+<table>
+    <thead>
+        <th>User ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Date Registered</th>
+        <th>Email</th>
+    </thead>
+    <tbody>
+        {% for user in users %}
+        <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.first_name }}</td>
+            <td>{{ user.last_name }}</td>
+            <td>{{ user.created_at|date:"N d, Y" }}</td>
+            <td>{{ user.email }}</td>
+        </tr>
+        {% endfor %}
+        {% for i in rowcount %}
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

@@ -8,9 +8,6 @@ class Users(View):
     def get(self, request):
         userquery = User.objects.all()
         pagecount = int(float(len(userquery)-1)/5)
-        print "Query Length:", len(userquery)
-        print "Pagecount:", pagecount
-        print "Page Range:", range(pagecount+1)
         context = {
             'users': userquery[0:5],
             'rowcount': range(len(userquery), 5),
@@ -29,12 +26,11 @@ class Users(View):
             userquery = userquery.filter(created_at__lte=request.POST['date_to'])
             # Does not include same day, since date input defaults to 00:00am
             # May need to exclude created_at time when comparing to date input
+        start = 5*(int(request.POST['page'])-1)
+        end = 5*(int(request.POST['page'])-1) + 5
         pagecount = int(float(len(userquery)-1)/5)
-        print "Query Length:", len(userquery)
-        print "Pagecount:", pagecount
-        print "Page Range:", range(pagecount+1)
         context = {
-            'users': userquery[0:5],
+            'users': userquery[start:end],
             'rowcount': range(len(userquery), 5),
             'pagerange': range(pagecount+1),
         }

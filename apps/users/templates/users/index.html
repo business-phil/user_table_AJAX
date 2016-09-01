@@ -9,8 +9,8 @@
 <body>
     <h1>View Users</h1>
     <h3>Filter Users</h3>
-    <div class="user_table">
-        <form class="filter_form" action="{% url 'index' %}" method="post">
+    <div id="user_table">
+        <form id="filter_form" action="{% url 'index' %}" method="post">
             {% csrf_token %}
             <p><label for="name">Name: </label>
             <input id="name" type="text" name="name" /></p>
@@ -18,10 +18,13 @@
             <input id="date_from" type="date" name="date_from" />
             <label for="date_to">To: </label>
             <input id="date_to" type="date" name="date_to" /></p>
+            <input id="page" type="hidden" name="page" value="1" />
+            <!-- <input type="submit" value="Filter" /> -->
             {% if pagerange|length > 1 %}
             <ul>
+                <li>Page: </li>
                 {% for i in pagerange %}
-                <li><a href="#"></a>{{ i|add:'1' }}</li>
+                <li><a href="#">{{ i|add:'1' }}</a></li>
                 {% endfor %}
             </ul>
             {% endif %}
