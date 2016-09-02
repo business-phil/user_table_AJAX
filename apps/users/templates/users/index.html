@@ -4,67 +4,72 @@
     {% load staticfiles %}
     <meta charset="utf-8">
     <title>Users Using AJAX</title>
+    <link href='https://fonts.googleapis.com/css?family=Raleway:400,300,600' rel='stylesheet' type='text/css' />
+    <link rel="stylesheet" href="{% static 'users/css/normalize.css' %}" />
+    <link rel="stylesheet" href="{% static 'users/css/skeleton.css' %}" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 </head>
 <body>
-    <h1>View Users</h1>
-    <h3>Filter Users</h3>
-    <div id="user_table">
-        <form id="filter_form" action="{% url 'index' %}" method="post">
+    <div class="container">
+        <h1>View Users</h1>
+        <h4>Filter Users</h4>
+        <div id="user_table">
+            <form id="filter_form" action="{% url 'index' %}" method="post">
+                {% csrf_token %}
+                <p><label for="name">Name: </label>
+                <input id="name" type="text" name="name" /></p>
+                <p><label for="date_from">From: </label>
+                <input id="date_from" type="date" name="date_from" /></p>
+                <p><label for="date_to">To: </label>
+                <input id="date_to" type="date" name="date_to" /></p>
+                <input id="page" type="hidden" name="page" value="1" />
+                <!-- <input type="submit" value="Filter" /> -->
+                {% if pagerange|length > 1 %}
+                <ul>
+                    <li>Page: </li>
+                    {% for i in pagerange %}
+                    <li><a href="#">{{ i|add:'1' }}</a></li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </form>  <!-- end filter form -->
+            <table>
+                <thead>
+                    <th>User ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Date Registered</th>
+                    <th>Email</th>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.first_name }}</td>
+                        <td>{{ user.last_name }}</td>
+                        <td>{{ user.created_at|date:"N d, Y" }}</td>
+                        <td>{{ user.email }}</td>
+                    </tr>
+                    {% endfor %}
+                    {% for i in rowcount %}
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>  <!-- end user table -->
+        <h4>Add New User</h4>
+        <form id="create_form" action="{% url 'index' %}" method="get">
             {% csrf_token %}
-            <p><label for="name">Name: </label>
-            <input id="name" type="text" name="name" /></p>
-            <p><label for="date_from">From: </label>
-            <input id="date_from" type="date" name="date_from" />
-            <label for="date_to">To: </label>
-            <input id="date_to" type="date" name="date_to" /></p>
-            <input id="page" type="hidden" name="page" value="1" />
-            <!-- <input type="submit" value="Filter" /> -->
-            {% if pagerange|length > 1 %}
-            <ul>
-                <li>Page: </li>
-                {% for i in pagerange %}
-                <li><a href="#">{{ i|add:'1' }}</a></li>
-                {% endfor %}
-            </ul>
-            {% endif %}
-        </form>  <!-- end filter form -->
-        <table>
-            <thead>
-                <th>User ID</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Date Registered</th>
-                <th>Email</th>
-            </thead>
-            <tbody>
-                {% for user in users %}
-                <tr>
-                    <td>{{ user.id }}</td>
-                    <td>{{ user.first_name }}</td>
-                    <td>{{ user.last_name }}</td>
-                    <td>{{ user.created_at|date:"N d, Y" }}</td>
-                    <td>{{ user.email }}</td>
-                </tr>
-                {% endfor %}
-                {% for i in rowcount %}
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>  <!-- end user table -->
-    <h3>Add New User</h3>
-    <form id="create_form" action="{% url 'index' %}" method="get">
-        {% csrf_token %}
-        {{ add_user.as_p }}
-        <input type="submit" value="Add User">
-    </form>  <!-- end create user form -->
+            {{ add_user.as_p }}
+            <input type="submit" value="Add User">
+        </form>  <!-- end create user form -->
+    </div>
 </body>
 <script type="text/javascript" src="{% static 'users/js/jquery.js' %}"></script>
 </html>

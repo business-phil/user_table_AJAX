@@ -31,7 +31,7 @@ class Users(View):
         pagecount = int(float(len(userquery)-1)/5)
         context = {
             'users': userquery[start:end],
-            'rowcount': range(len(userquery), 5),
+            'rowcount': range(len(userquery[start:end]), 5),
             'pagerange': range(pagecount+1),
         }
         return render(request, 'users/index_table.html', context)
