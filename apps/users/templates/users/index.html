@@ -7,6 +7,7 @@
     <link href='https://fonts.googleapis.com/css?family=Raleway:400,300,600' rel='stylesheet' type='text/css' />
     <link rel="stylesheet" href="{% static 'users/css/normalize.css' %}" />
     <link rel="stylesheet" href="{% static 'users/css/skeleton.css' %}" />
+    <link rel="stylesheet" href="{% static 'users/css/styles.css' %}" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 </head>
 <body>
@@ -16,16 +17,24 @@
         <div id="user_table">
             <form id="filter_form" action="{% url 'index' %}" method="post">
                 {% csrf_token %}
-                <p><label for="name">Name: </label>
-                <input id="name" type="text" name="name" /></p>
-                <p><label for="date_from">From: </label>
-                <input id="date_from" type="date" name="date_from" /></p>
-                <p><label for="date_to">To: </label>
-                <input id="date_to" type="date" name="date_to" /></p>
+                <div class="row">
+                    <div class="four columns">
+                        <label for="name">Name: </label>
+                        <input class="u-max-full-width" id="name" type="text" name="name" />
+                    </div>
+                    <div class="four columns pad-left">
+                        <label for="date_from">Registered After: </label>
+                        <input class="u-max-full-width" id="date_from" type="date" name="date_from" />
+                    </div>
+                    <div class="four columns">
+                        <label for="date_to">Before: </label>
+                        <input class="u-max-full-width" id="date_to" type="date" name="date_to" />
+                    </div>
+                </div>
                 <input id="page" type="hidden" name="page" value="1" />
                 <!-- <input type="submit" value="Filter" /> -->
                 {% if pagerange|length > 1 %}
-                <ul>
+                <ul class="u-pull-right">
                     <li>Page: </li>
                     {% for i in pagerange %}
                     <li><a href="#">{{ i|add:'1' }}</a></li>
@@ -33,7 +42,7 @@
                 </ul>
                 {% endif %}
             </form>  <!-- end filter form -->
-            <table>
+            <table class="u-full-width">
                 <thead>
                     <th>User ID</th>
                     <th>First Name</th>
@@ -67,7 +76,7 @@
         <form id="create_form" action="{% url 'index' %}" method="get">
             {% csrf_token %}
             {{ add_user.as_p }}
-            <input type="submit" value="Add User">
+            <input class="button-primary" type="submit" value="Add User">
         </form>  <!-- end create user form -->
     </div>
 </body>

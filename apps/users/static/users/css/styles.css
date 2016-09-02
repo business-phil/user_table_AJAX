@@ -1,0 +1,28 @@
+h4 {
+    display: inline-block;
+    margin-top: 1.6rem;
+    border-bottom: 1px solid #E1E1E1;
+}
+tbody tr:nth-child(odd) {
+    background-color: #eee;
+}
+th, td {
+    height: 24px;
+}
+td:first-child {
+  padding-left: 12px;
+}
+ul {
+    list-style: none;
+    margin: 2rem 4rem 0 0;
+}
+ul li {
+    display: inline-block;
+    margin-bottom: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: 0.2rem;
+}
+.pad-left {
+    padding-left: 6%;
+}
