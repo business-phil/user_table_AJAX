@@ -29,7 +29,16 @@ class Users(View):
 
 class Filter(View):
     def get(self, request):
-        userquery = request.session['userquery'] if 'userquery' in request.session else User.objects.all()
+        userquery = User.objects.all()
+        if 'filterargs' in request.session:
+            if request.session['filterargs'][0]:
+                userquery = userquery.filter(Q(first_name__contains=request.session['filterargs'][0]) | Q(last_name__contains=request.session['filterargs'][0]))
+            if request.session['filterargs'][1]:
+                userquery = userquery.filter(created_at__gte=request.session['filterargs'][1])
+            if request.session['filterargs'][2]:
+                userquery = userquery.filter(created_at__lte=request.session['filterargs'][2])
+                # Does not include same day, since date input defaults to 00:00am
+                # May need to isolate created_at date when comparing to date input
         querylimit = request.session['querylimit'] if 'querylimit' in request.session else (0, 5)
         pagecount = int(float(len(userquery)-1)/5)
         context = {
@@ -40,17 +49,8 @@ class Filter(View):
         return render(request, 'users/index_table.html', context)
 
     def post(self, request):
-        userquery = User.objects.all()
-        if request.POST['name']:
-            userquery = userquery.filter(Q(first_name__contains=request.POST['name']) | Q(last_name__contains=request.POST['name']))
-        if request.POST['date_from']:
-            userquery = userquery.filter(created_at__gte=request.POST['date_from'])
-        if request.POST['date_to']:
-            userquery = userquery.filter(created_at__lte=request.POST['date_to'])
-            # Does not include same day, since date input defaults to 00:00am
-            # May need to isolate created_at date when comparing to date input
         start = 5*(int(request.POST['page'])-1)
-        end = 5 + 5*(int(request.POST['page'])-1)
-        request.session['userquery'] = userquery
+        end = start + 5
+        request.session['filterargs'] = (request.POST['name'], request.POST['date_from'], request.POST['date_to'])
         request.session['querylimit'] = (start, end)
         return redirect('filter')
