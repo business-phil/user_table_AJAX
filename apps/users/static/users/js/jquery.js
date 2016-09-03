@@ -5,7 +5,7 @@ $(document).on('submit', '#filter_form', function(event) {
     var date_from = $('#date_from').val();
     var date_to = $('#date_to').val();
     $.ajax({
-        url: "/",
+        url: "/filter",
         method: "post",
         data: $(this).serialize(),
         success: function(response) {
@@ -30,7 +30,7 @@ $(document).on('click', 'a', function(event) {
 $('#create_form').submit(function(event) {
     event.preventDefault();
     $.ajax({
-        url: "/create",
+        url: "/",
         method: "post",
         data: $(this).serialize(),
         success: function(response) {

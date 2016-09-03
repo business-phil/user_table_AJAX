@@ -15,7 +15,7 @@
         <h1>View Users</h1>
         <h4>Filter Users</h4>
         <div id="user_table">
-            <form id="filter_form" action="{% url 'index' %}" method="post">
+            <form id="filter_form" action="{% url 'filter' %}" method="post">
                 {% csrf_token %}
                 <div class="row">
                     <div class="four columns">
@@ -73,7 +73,7 @@
             </table>
         </div>  <!-- end user table -->
         <h4>Add New User</h4>
-        <form id="create_form" action="{% url 'index' %}" method="get">
+        <form id="create_form" action="{% url 'users' %}" method="post">
             {% csrf_token %}
             {{ add_user.as_p }}
             <input class="button-primary" type="submit" value="Add User">
